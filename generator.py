@@ -11,8 +11,14 @@ class Generator:
 
 		g = graph.Graph()
 
-		# Generate vertex
+		# Vertex
 		for i in range(complexity):
 			v = graph.Vertex(random.randint(1, 20), random.randint(1, 20))
 
+			if not g.occupied(v.x, v.y):
+				g.addVertex(v)
+
+		# Edges
+		for i in range(complexity):
+			e = graph.Edge()
 
