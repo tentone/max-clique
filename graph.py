@@ -14,3 +14,12 @@ class Graph:
 	def __init__(self):
 		self.vertices = []
 		self.edges = []
+
+	def addVertex(v):
+		pass
+
+	def occupied(self, x, y):
+		for v in self.vertices:
+			if v.x == x and v.y == y:
+				return True
+		return False
