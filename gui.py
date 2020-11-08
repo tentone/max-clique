@@ -1,4 +1,4 @@
-import _thread
+import threading
 import pygame
 from pygame import Vector2
 from pygame.locals import *
@@ -11,7 +11,7 @@ class GUI:
 		# Window resolution
 		self.resolution = (800, 600)
 
-		# Camera position		
+		# Camera position
 		self.camera = (200, 400)
 
 		# Zoom
@@ -31,10 +31,14 @@ class GUI:
 	# Update the GUI to draw the updated graph
 	def update(self, events):
 		for event in events:
-			# Exit the GUI if the ESC key was pressed
-			if event.type == QUIT or event.key == K_ESCAPE:
+			if event.type == QUIT:
 				pygame.quit()
 				quit()
+			# Exit the GUI if the ESC key was pressed
+			elif event.type == KEYDOWN:
+				if event.key == K_ESCAPE:
+					pygame.quit()
+					quit()
 			# Update the screen resolution if the window was resized
 			elif event.type == VIDEORESIZE:
 				self.resolution = event.size
@@ -46,7 +50,7 @@ class GUI:
 
 		self.mouse = pygame.mouse.get_pos()
 
-		pygame.draw.circle(self.surface, Color(255, 0, 0), Vector2(0, 0), 10)
+		self.circle(Color(255, 0, 0), Vector2(0, 0), 10)
 		pygame.display.flip()
 
 	# Transform a point using the camera position and zoom level
@@ -66,12 +70,17 @@ class GUI:
 		pygame.draw.circle(self.surface, color, self.transform(pos), 2, 0)
 
 	# Loop to keep the GUI updated runs in a thread that is started by the run() method.
-	def loop(self):
+	def run(self):
 		while True:
 			self.update(pygame.event.get())
 
-	def run(self):
+	# Run the GUI in a separate thread
+	def start(self):
+		t = None
 		try:
-			_thread.start_new_thread(self.loop)
+			t = threading.Thread(self.run)
+			t.start()
 		except:
 			print("Failed to start GUI thread")
+
+		return t
