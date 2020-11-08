@@ -15,7 +15,7 @@ class GUI:
 		self.camera = (200, 400)
 
 		# Zoom
-		self.zoom = 20
+		self.zoom = 1
 
 		# Mouse position
 		self.mouse = (0, 0)
@@ -30,6 +30,7 @@ class GUI:
 
 	# Update the GUI to draw the updated graph
 	def update(self, events):
+
 		for event in events:
 			if event.type == QUIT:
 				pygame.quit()
@@ -43,6 +44,10 @@ class GUI:
 			elif event.type == VIDEORESIZE:
 				self.resolution = event.size
 				self.surface = pygame.display.set_mode(event.size, pygame.RESIZABLE)
+			elif event.type == MOUSEWHEEL:
+				self.zoom += event.y
+				if self.zoom <= 0:
+					self.zoom = 1
 
 		# If the mouse button is pressed move the camera position
 		if pygame.mouse.get_pressed()[0]:
@@ -50,12 +55,13 @@ class GUI:
 
 		self.mouse = pygame.mouse.get_pos()
 
-		self.circle(Color(255, 0, 0), Vector2(0, 0), 10)
+		self.surface.fill(Color(0, 0, 0))
+		self.circle(Color(255, 0, 0), Vector2(0, 0), 5)
 		pygame.display.flip()
 
 	# Transform a point using the camera position and zoom level
 	def transform(self, val):
-		return ((int)(val[0]*self.zoom+self.camera[0]), (int)(self.resolution[1]-(val[1]*self.zoom+self.camera[1])))
+		return ((int)(val[0] * self.zoom + self.camera[0]), (int)(self.resolution[1] - (val[1] * self.zoom + self.camera[1])))
 
 	# Draw a line from init to end
 	def line(self, color, ini, end):
@@ -63,7 +69,7 @@ class GUI:
 
 	# Draw a circle into the screen
 	def circle(self, color, center, radius, inner_radius = 0):
-		pygame.draw.circle(self.surface, color, self.transform(center), radius, inner_radius)
+		pygame.draw.circle(self.surface, color, self.transform(center), radius * self.zoom, inner_radius * self.zoom)
 
 	# Draw a point into the screen
 	def point(self, color, pos):
