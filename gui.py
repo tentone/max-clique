@@ -59,7 +59,10 @@ class GUI:
 		self.mouse = pygame.mouse.get_pos()
 
 		self.surface.fill(Color(0, 0, 0))
-		self.circle(Color(255, 0, 0), Vector2(0, 0), 5)
+
+		for e in self.graph.edges:
+			self.circle(Color(255, 0, 0), Vector2(e.x, e.y), 5)
+
 		pygame.display.flip()
 
 	# Transform a point using the camera position and zoom level

@@ -1,12 +1,10 @@
 import graph
 import gui
-
+import generator
 def main():
-	v = graph.Vertex(1, 2)
-	print(v)
+	g = generator.generate(63944, 5)
 
-	g = gui.GUI()
-	g.run()
+	gui.GUI(g).run()
 
 if __name__ == "__main__":
 	main()
