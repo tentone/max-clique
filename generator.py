@@ -17,7 +17,7 @@ def generate(seed, complexity):
 		while not success:
 			v = graph.Vertex(random.randint(1, 20), random.randint(1, 20))
 
-			if not g.isOccupied(v.x, v.y):
+			if not g.isOccupiedRadius(v.x, v.y, 0):
 				g.addVertex(v)
 				success = True
 
