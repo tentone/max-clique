@@ -3,13 +3,22 @@ import pygame
 from pygame import Vector2
 from pygame.locals import *
 
+# Class to represent a graph in the GUI.
+class GraphGUI:
+	def __init__(self, graph, vertexColor, edgeColor):
+		self.graph = graph
+		self.vertexColor = vertexColor
+		self.edgeColor = edgeColor
+
 # GUI to visualize the created graph and its adjacencies.
 #
 # Each graph vertex is drawn in the grid with its connection to other graph vertices.
 class GUI:
-	def __init__(self, graph):
-		# Graph to be presented
-		self.graph = graph
+	def __init__(self):
+		# Graph to be presented in the GUI
+		#
+		# Rendered by order on top of each other (sub-graphs can be overlayed)
+		self.graphs = []
 
 		# Window resolution
 		self.resolution = (800, 600)
@@ -31,9 +40,14 @@ class GUI:
 		self.surface = pygame.display.get_surface();
 		self.font = pygame.font.SysFont(None, 20)
 
+	# Add a new graph to be drawn in the GUI
+	#
+	# Graphs are drawn in the same order as they are added to the GUI.
+	def addGraph(self, graph, vertexColor, edgeColor):
+		self.graphs.append(GraphGUI(graph, vertexColor, edgeColor))
+
 	# Update the GUI to draw the updated graph
 	def update(self, events):
-
 		for event in events:
 			if event.type == QUIT:
 				pygame.quit()
@@ -68,13 +82,15 @@ class GUI:
 			self.line((70, 70, 70), Vector2(x * sp, sp), Vector2(x * sp, 20 * sp), 1)
 			self.line((70, 70, 70), Vector2(sp, x * sp), Vector2(20 * sp, x * sp), 1)
 
-		# Draw the graph into the screen
-		for e in self.graph.edges:
-			self.line((255, 255, 0), Vector2(e.v[0].x * sp, e.v[0].y * sp), Vector2(e.v[1].x * sp, e.v[1].y * sp))
+		# Draw the graphs into the screen
+		for g in self.graphs:
+			for e in g.graph.edges:
+				self.line(g.edgeColor, Vector2(e.v[0].x * sp, e.v[0].y * sp), Vector2(e.v[1].x * sp, e.v[1].y * sp))
 
-		for v in self.graph.vertices:
-			self.circle(Color(255, 0, 0), Vector2(v.x * sp, v.y * sp), 1)
+			for v in g.graph.vertices:
+				self.circle(g.vertexColor, Vector2(v.x * sp, v.y * sp), 1)
 
+		# Update the surface to present new content
 		pygame.display.flip()
 
 	# Transform a point using the camera position and zoom level

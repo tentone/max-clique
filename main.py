@@ -2,9 +2,11 @@ import gui
 import generator
 
 def main():
-	g = generator.generate(63944, 10)
+	a = generator.generate(63944, 10)
 
-	gui.GUI(g).run()
+	g = gui.GUI()
+	g.addGraph(a, (255, 0, 0), (255, 255, 0))
+	g.run()
 
 if __name__ == "__main__":
 	main()
