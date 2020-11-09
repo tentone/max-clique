@@ -65,8 +65,8 @@ class GUI:
 
 		# Draw grid
 		for x in range(1, 21):
-			self.line((100, 100, 100), Vector2(x * sp, sp), Vector2(x * sp, 20 * sp))
-			self.line((100, 100, 100), Vector2(sp, x * sp), Vector2(20 * sp, x * sp))
+			self.line((70, 70, 70), Vector2(x * sp, sp), Vector2(x * sp, 20 * sp), 1)
+			self.line((70, 70, 70), Vector2(sp, x * sp), Vector2(20 * sp, x * sp), 1)
 
 		# Draw the graph into the screen
 		for e in self.graph.edges:
@@ -82,8 +82,8 @@ class GUI:
 		return ((int)(val[0] * self.zoom + self.camera[0]), (int)(self.resolution[1] - (val[1] * self.zoom + self.camera[1])))
 
 	# Draw a line from init to end
-	def line(self, color, ini, end):
-		pygame.draw.line(self.surface, color, self.transform(ini), self.transform(end), 2)
+	def line(self, color, ini, end, thickness = 2):
+		pygame.draw.line(self.surface, color, self.transform(ini), self.transform(end), thickness)
 
 	# Draw a circle into the screen
 	def circle(self, color, center, radius, inner_radius = 0):
