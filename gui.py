@@ -7,7 +7,10 @@ from pygame.locals import *
 #
 # Each graph vertex is drawn in the grid with its connection to other graph vertices.
 class GUI:
-	def __init__(self):
+	def __init__(self, graph):
+		# Graph to be presented
+		self.graph = graph
+
 		# Window resolution
 		self.resolution = (800, 600)
 
@@ -22,7 +25,7 @@ class GUI:
 
 		pygame.font.init()
 		pygame.init()
-		pygame.display.set_caption("Graph")
+		pygame.display.set_caption("DAA - Graph Clique")
 		pygame.display.set_mode(self.resolution, pygame.RESIZABLE)
 
 		self.surface = pygame.display.get_surface();
