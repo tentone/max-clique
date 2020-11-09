@@ -60,8 +60,20 @@ class GUI:
 
 		self.surface.fill(Color(0, 0, 0))
 
+		# Spacing between the graph nodes
+		sp = 3
+
+		# Draw grid
+		for x in range(1, 21):
+			self.line((100, 100, 100), Vector2(x * sp, sp), Vector2(x * sp, 20 * sp))
+			self.line((100, 100, 100), Vector2(sp, x * sp), Vector2(20 * sp, x * sp))
+
+		# Draw the graph into the screen
 		for e in self.graph.edges:
-			self.circle(Color(255, 0, 0), Vector2(e.x, e.y), 5)
+			self.line((255, 255, 0), Vector2(e.v[0].x * sp, e.v[0].y * sp), Vector2(e.v[1].x * sp, e.v[1].y * sp))
+
+		for v in self.graph.vertices:
+			self.circle(Color(255, 0, 0), Vector2(v.x * sp, v.y * sp), 1)
 
 		pygame.display.flip()
 

@@ -5,7 +5,7 @@ import graph
 #
 # Uses a new pseudo-random algorithm w/ seed as starting point to ensure repeatibility
 def generate(seed, complexity):
-	assert complexity > 2, "Complexity has to be greater than 2"
+	assert complexity > 2 and complexity < 20, "Complexity is out of range"
 
 	random.seed(seed)
 
@@ -25,15 +25,17 @@ def generate(seed, complexity):
 	for i in range(complexity):
 		success = False
 		while not success:
-			max = len(g.edges) - 1
+			max = len(g.vertices) - 1
 
-			a = g.edges[random.randint(0, max)]
-			b = g.edges[random.randint(0, max)]
+			a = g.vertices[random.randint(0, max)]
+			b = g.vertices[random.randint(0, max)]
 
 			while b == a:
-				b = g.edges[random.randint(0, max)]
+				b = g.vertices[random.randint(0, max)]
 
-			e = graph.Edge(a, b)
-			if not g.edgeExists(e):
+			if not g.edgeExists(a, b):
+				e = graph.Edge(a, b)
 				g.addEdge(e)
 				success = True
+
+	return g
