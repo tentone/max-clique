@@ -34,9 +34,9 @@ class Graph:
 	# Get the edges for a specific vertex
 	def getEdges(self, v):
 		edges = []
-
 		for e in self.edges:
-			pass
+			if e.contains(v):
+				edges.append(e)
 
 		return edges
 

@@ -4,25 +4,23 @@ import graph
 # Generate a new graph with the provided configuration.
 #
 # Uses a new pseudo-random algorithm w/ seed as starting point to ensure repeatibility
-def generate(seed, complexity):
-	assert complexity > 2 and complexity < 20, "Complexity is out of range"
-
+def generate(seed, vertices, edges):
 	random.seed(seed)
 
 	g = graph.Graph()
 
-	# Vertex
-	for i in range(complexity):
+	# Vertices
+	for i in range(vertices):
 		success = False
 		while not success:
 			v = graph.Vertex(random.randint(1, 20), random.randint(1, 20))
 
-			if not g.isOccupiedRadius(v.x, v.y, 0):
+			if not g.isOccupiedRadius(v.x, v.y, 1):
 				g.addVertex(v)
 				success = True
 
 	# Edges
-	for i in range(complexity):
+	for i in range(edges):
 		success = False
 		while not success:
 			max = len(g.vertices) - 1
