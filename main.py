@@ -3,8 +3,8 @@ import generator
 import clique
 
 def main():
-	a = generator.generate(63944, 6, 12)
-	q = clique.findCliquesNaive(a)
+	a = generator.generate(63944, 20, 100)
+	q = clique.findAllCliquesNaive(a)
 
 	g = gui.GUI()
 	g.addGraph(a, (255, 0, 0), (255, 255, 0))
