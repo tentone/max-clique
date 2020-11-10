@@ -4,9 +4,7 @@ import clique
 
 def main():
 	a = generator.generate(63944, 6, 12)
-	q = clique.findCliques(a)
-
-	print(q)
+	q = clique.findCliquesNaive(a)
 
 	g = gui.GUI()
 	g.addGraph(a, (255, 0, 0), (255, 255, 0))

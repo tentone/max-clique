@@ -4,7 +4,7 @@ import graph
 # Searches for all cliques inside of the graph.
 #
 # Uses a naive approach doing all combinations of vertexes and checking if each group has connections to each others.
-def findCliques(g):
+def findCliquesNaive(g):
 	# List of cliques found in the graph
 	cliques = []
 
