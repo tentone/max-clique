@@ -24,11 +24,10 @@ def findCliques(g):
 			isClique = True
 
 			# Check if the vertices are all connected
-			for i in range(len(c) - 1):
-				for j in range(i, len(c)):
+			for i in range(0, len(c) - 1):
+				for j in range(i + 1, len(c)):
 					if not g.edgeExists(c[i], c[j]):
 						isClique = False
-
 
 			if isClique:
 				cliqueFound = True
@@ -49,8 +48,3 @@ def findCliques(g):
 
 	return cliques
 
-# Get the biggest (or one of the biggest) cliques in the graph
-#
-# Using a naive approach, starting for the biggest ammount of
-def getBiggestClique():
-    pass
