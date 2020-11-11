@@ -50,8 +50,8 @@ def findAllCliquesNaive(g):
 
 # Find the maximum clique using a naive approach.
 #
-# Starts by testing the higher possible
-def findMaximumCliqueNaive(g):
+# Starts by testing the higher possible, size of the clique
+def findMaximumCliqueNaiveUpDown(g):
 	size = len(g.vertices)
 
 	while size > 1:
@@ -65,15 +65,8 @@ def findMaximumCliqueNaive(g):
 			# Check if the vertices are all connected
 			for i in range(0, len(c) - 1):
 				for j in range(i + 1, len(c)):
-					# Check if the two edges are connected
-					edgeConnected = False
-					for e in g.edges:
-						if e.hasVertices(c[i], c[j]):
-							edgeConnected = True
-							break
-
 					# If a edge is not connected then it is not a clique
-					if not edgeConnected:
+					if not g.edgeExists(c[i], c[j]):
 						isClique = False
 						break
 
