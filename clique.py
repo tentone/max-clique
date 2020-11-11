@@ -49,17 +49,9 @@ def findAllCliquesNaive(g):
 	return cliques
 
 def findMaximumCliqueNaive(g):
-	# List of cliques found in the graph
-	cliques = []
+	size = len(g.vertices)
 
-	size = 2
-
-	while True:
-		if size > len(g.vertices):
-			break
-
-		cliqueFound = False
-
+	while size > 1:
 		# All possible combinations of vertices
 		combs = list(combinations(g.vertices, size))
 
@@ -74,20 +66,14 @@ def findMaximumCliqueNaive(g):
 						isClique = False
 
 			if isClique:
-				cliqueFound = True
-
-				# Create the subgraph and store
 				cq = graph.Graph()
 				cq.vertices = c
 				for i in range(0, len(c) - 1):
 					for j in range(i + 1, len(c)):
 						cq.addEdge(graph.Edge(c[i], c[j]))
-				cliques.append(cq)
+				return cq
 
-		# Increase size
-		size += 1
+		# Decrease size
+		size -= 1
 
-		if not cliqueFound:
-			break
-
-	return cliques
+	return None
