@@ -65,9 +65,23 @@ def findMaximumCliqueNaive(g):
 			# Check if the vertices are all connected
 			for i in range(0, len(c) - 1):
 				for j in range(i + 1, len(c)):
-					if not g.edgeExists(c[i], c[j]):
-						isClique = False
+					# Check if the two edges are connected
+					edgeConnected = False
+					for e in g.edges:
+						if e.hasVertices(c[i], c[j]):
+							edgeConnected = True
+							break
 
+					# If a edge is not connected then it is not a clique
+					if not edgeConnected:
+						isClique = False
+						break
+
+				# Break if is not a clique
+				if not isClique:
+					break
+
+			# First clique found can be directly considered as the biggest
 			if isClique:
 				cq = graph.Graph()
 				cq.vertices = c
