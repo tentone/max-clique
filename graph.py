@@ -1,8 +1,12 @@
+import json
+import uuid
+
 # Stores a vertex in a position of the graph.
 class Vertex:
 	def __init__(self, x, y):
 		assert x > 0 and x <= 20 and y > 0 and y <= 20
 
+		self.id = uuid.uuid4()
 		self.x = x
 		self.y = y
 
@@ -70,3 +74,29 @@ class Graph:
 			if x >= v.x - radius and x <= v.x + radius and y >= v.y - radius and y <= v.y + radius:
 				return True
 		return False
+
+	# Serialize the graph into a JSON file
+	#
+	# The exported files contains all the vertices and the edges by id.
+	def toJSON(self):
+		edges = []
+		for e in self.edges:
+			edge = []
+			for v in e.v:
+				edge.append(str(v.id))
+			edges.append(edge)
+
+		vertices = []
+		for v in self.vertices:
+			vertices.append({
+				'id': str(v.id),
+				'x': v.x,
+				'y': v.y
+			})
+
+		return json.dumps({
+			'vertices': vertices,
+			'edges': edges
+		}, indent=4)
+
+

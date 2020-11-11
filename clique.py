@@ -48,6 +48,9 @@ def findAllCliquesNaive(g):
 
 	return cliques
 
+# Find the maximum clique using a naive approach.
+#
+# Starts by testing the higher possible
 def findMaximumCliqueNaive(g):
 	size = len(g.vertices)
 

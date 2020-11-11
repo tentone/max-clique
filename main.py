@@ -3,13 +3,20 @@ import generator
 import clique
 
 def main():
-	a = generator.generate(63944, 20, 100)
-	q = clique.findAllCliquesNaive(a)
-
 	g = gui.GUI()
+
+	# Graph
+	a = generator.generate(63944, 10, 40)
+	print(a.serialize())
 	g.addGraph(a, (255, 0, 0), (255, 255, 0))
-	if len(q) > 0:
-		g.addGraph(q[-1], (0, 0, 255), (0, 255, 255))
+
+	# All cliques
+	#q = clique.findAllCliquesNaive(a)
+	#if len(q) > 0:
+	#	g.addGraph(q[-1], (0, 0, 255), (0, 255, 255))
+
+	q = clique.findMaximumCliqueNaive(a)
+	g.addGraph(q, (0, 0, 255), (0, 255, 255))
 
 	g.run()
 
