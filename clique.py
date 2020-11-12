@@ -4,7 +4,7 @@ import graph
 class Clique:
 	# Searches for all cliques inside of the graph.
 	#
-	# Uses a naive approach doing all combinations of vertexes and checking if each group has connections to each others.
+	# Uses a naive approach testing all combinations of vertexes and checking if each group has connections to each others.
 	@staticmethod
 	def findAllNaive(g):
 		# List of cliques found in the graph
@@ -50,7 +50,7 @@ class Clique:
 
 		return cliques
 
-	# Find the maximum clique using a naive approach.
+	# Find the maximum clique using a naive approach testing all combinations of vertexes.
 	#
 	# Starts by testing the higher possible, size of the clique
 	@staticmethod
