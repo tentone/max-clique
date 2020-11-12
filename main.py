@@ -5,11 +5,17 @@ import clique
 import pprint
 
 def main():
-	# Benchmark
-	# b = Benchmark()
-	# _, average = b.run(clique.Clique.findMaxNaive)
-	# Benchmark.writeCSV(average, 'test.csv')
-	#pprint.pprint(results)
+	b = Benchmark()
+
+	# Benchmark Naive Down
+	results = b.run(clique.Clique.findMaxNaiveDown)
+	Benchmark.writeCSV(results, 'naive_down.csv')
+
+	# Benchmark Naive Up
+	# results = b.run(clique.Clique.findMaxNaiveUp)
+	# Benchmark.writeCSV(results, 'up.csv')
+
+	return
 
 	# Graph
 	g = gui.GUI()
@@ -24,7 +30,7 @@ def main():
 	#if len(q) > 0:
 	# 	g.addGraph(q[-1], (0, 0, 255), (0, 255, 255))
 
-	q, _ = clique.Clique.findMaxNaive(a)
+	q, _ = clique.Clique.findMaxNaiveUp(a)
 	g.addGraph(q, (0, 0, 255), (0, 255, 255))
 
 	g.run()
