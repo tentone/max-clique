@@ -61,7 +61,7 @@ class Benchmark:
 		while vertices <= self.vertices_to:
 			connectivity = self.connectivity_from
 			while connectivity <= self.connectivity_to:
-				res = BenchmarkResult(0, 0, None, 0, 0)
+				res = BenchmarkResult(0, 0, 0, 0, 0)
 
 				for t in range(0, self.tests):
 					# Calculate the number of edges for % connectivity
