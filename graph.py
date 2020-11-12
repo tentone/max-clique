@@ -6,9 +6,9 @@ import uuid
 # Vertices have (x, y) integer position associated.
 class Vertex:
 	def __init__(self, x, y):
-		assert x > 0 and x <= 20 and y > 0 and y <= 20
-
+		# UUID of the vertex, used for serialization.
 		self.id = uuid.uuid4()
+
 		self.x = x
 		self.y = y
 
@@ -30,14 +30,15 @@ class Edge:
 		return a in self.v and b in self.v
 
 # Stores the full undirected graph data.
-#
-# Vertex and edge data is stored separatelly.
 class Graph:
 	def __init__(self):
+		# List of all vertices that compose the graph
 		self.vertices = []
+
+		# Edges that connect the edges togheter
 		self.edges = []
 
-	# Max number of edges that this graph can have based of its number of vertices
+	# Max number of edges that a graph can have based of its number of vertices
 	@staticmethod
 	def maximumEdges(v):
 		return v * (v - 1) / 2
@@ -84,7 +85,7 @@ class Graph:
 
 	# Generate a adjacency matrix for the graph.
 	#
-	# May be useful for some analysis scenarios
+	# May be useful for analysis in some scenarios.
 	def adjacencyMatrix(self):
 		matrix = []
 
@@ -94,7 +95,7 @@ class Graph:
 
 		return matrix
 
-	# Serialize the graph into a JSON file
+	# Serialize the graph into a JSON file.
 	#
 	# The exported files contains all the vertices and the edges by id.
 	def toJSON(self):
@@ -117,5 +118,3 @@ class Graph:
 			'vertices': vertices,
 			'edges': edges
 		}, indent=4)
-
-

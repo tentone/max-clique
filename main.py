@@ -15,6 +15,11 @@ def main():
 	# results = b.run(clique.Clique.findMaxNaiveUp)
 	# Benchmark.writeCSV(results, 'up.csv')
 
+	# Benchmark expand
+	# results = b.run(clique.Clique.findMaxNaiveUp)
+	# Benchmark.writeCSV(results, 'up.csv')
+
+
 	return
 
 	# Graph

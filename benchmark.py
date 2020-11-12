@@ -36,11 +36,11 @@ class BenchmarkResult:
 class Benchmark:
 	def __init__(self):
 		# How many test to do for each graph configuration
-		self.tests = 30
+		self.tests = 5
 
 		# Graph size
 		self.vertices_from = 4
-		self.vertices_to = 12
+		self.vertices_to = 20
 		self.vertices_steps = 1
 
 		# Connectivity
@@ -91,8 +91,8 @@ class Benchmark:
 	@staticmethod
 	def writeCSV(results, fname):
 		with open(fname, 'w', newline='') as csvfile:
-			fieldnames = ['vertices', 'edges', 'iterations', 'time']
+			fieldnames = ['vertices', 'edges', 'connectivity', 'iterations', 'time']
 			writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
 			writer.writeheader()
 			for r in results:
-				writer.writerow({'vertices': r.vertices, 'edges': r.edges, 'iterations': r.iterations, 'time': r.time})
+				writer.writerow({'vertices': r.vertices, 'edges': r.edges, 'connectivity': r.connectivity, 'iterations': r.iterations, 'time': r.time})
