@@ -4,7 +4,7 @@ from pygame import Vector2
 from pygame.locals import *
 
 # Class to represent a graph in the GUI.
-class GraphGUI:
+class GraphObject:
 	def __init__(self, graph, vertexColor, edgeColor):
 		self.graph = graph
 		self.vertexColor = vertexColor
@@ -44,7 +44,7 @@ class GUI:
 	#
 	# Graphs are drawn in the same order as they are added to the GUI.
 	def addGraph(self, graph, vertexColor, edgeColor):
-		self.graphs.append(GraphGUI(graph, vertexColor, edgeColor))
+		self.graphs.append(GraphObject(graph, vertexColor, edgeColor))
 
 	# Update the GUI to draw the updated graph
 	def update(self, events):

@@ -38,9 +38,9 @@ class Graph:
 		self.edges = []
 
 	# Max number of edges that this graph can have based of its number of vertices
-	def maxEdgesCount(self):
-		n = len(self.vertices)
-		return n * (n - 1) / 2
+	@staticmethod
+	def maximumEdges(v):
+		return v * (v - 1) / 2
 
 	# Get the edges for a specific vertex
 	def getEdges(self, v):

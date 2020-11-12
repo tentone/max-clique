@@ -6,20 +6,20 @@ def main():
 	g = gui.GUI()
 
 	# Graph
-	a = generator.generate(63944, 10, 40)
-	print(a.toJSON())
-	print(a.adjacencyMatrix())
+	a = generator.GraphGenerator.generate(63944, 10, 40)
+
+	# print(a.toJSON())
+	# print(a.adjacencyMatrix())
 
 	g.addGraph(a, (255, 0, 0), (255, 255, 0))
 
 
 	# All cliques
-	#q = clique.findAllCliquesNaive(a)
-	#if len(q) > 0:
-	#	g.addGraph(q[-1], (0, 0, 255), (0, 255, 255))
+	q = clique.Clique.findAllNaive(a)
+	if len(q) > 0:
+		g.addGraph(q[-1], (0, 0, 255), (0, 255, 255))
 
-	q, op = clique.findMaximumCliqueNaive(a)
-	print(op)
+	q, _ = clique.Clique.findMaxNaive(a)
 	g.addGraph(q, (0, 0, 255), (0, 255, 255))
 
 	g.run()
