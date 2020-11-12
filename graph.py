@@ -29,13 +29,18 @@ class Edge:
 	def hasVertices(self, a, b):
 		return a in self.v and b in self.v
 
-# Stores the full graph data.
+# Stores the full undirected graph data.
 #
 # Vertex and edge data is stored separatelly.
 class Graph:
 	def __init__(self):
 		self.vertices = []
 		self.edges = []
+
+	# Max number of edges that this graph can have based of its number of vertices
+	def maxEdgesCount(self):
+		n = len(self.vertices)
+		return n * (n - 1) / 2
 
 	# Get the edges for a specific vertex
 	def getEdges(self, v):

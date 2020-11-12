@@ -4,7 +4,7 @@ import graph
 # Searches for all cliques inside of the graph.
 #
 # Uses a naive approach doing all combinations of vertexes and checking if each group has connections to each others.
-def findAllCliquesNaive(g):
+def findAllCliques(g):
 	# List of cliques found in the graph
 	cliques = []
 
@@ -51,8 +51,9 @@ def findAllCliquesNaive(g):
 # Find the maximum clique using a naive approach.
 #
 # Starts by testing the higher possible, size of the clique
-def findMaximumCliqueNaiveUpDown(g):
+def findMaximumCliqueNaive(g):
 	size = len(g.vertices)
+	comparisons = 0
 
 	while size > 1:
 		# All possible combinations of vertices
@@ -67,6 +68,7 @@ def findMaximumCliqueNaiveUpDown(g):
 				for j in range(i + 1, len(c)):
 					# If a edge is not connected then it is not a clique
 					if not g.edgeExists(c[i], c[j]):
+						comparisons += 1
 						isClique = False
 						break
 
@@ -81,9 +83,9 @@ def findMaximumCliqueNaiveUpDown(g):
 				for i in range(0, len(c) - 1):
 					for j in range(i + 1, len(c)):
 						cq.addEdge(graph.Edge(c[i], c[j]))
-				return cq
+				return cq, comparisons
 
 		# Decrease size
 		size -= 1
 
-	return None
+	return None, comparisons

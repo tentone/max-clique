@@ -18,7 +18,8 @@ def main():
 	#if len(q) > 0:
 	#	g.addGraph(q[-1], (0, 0, 255), (0, 255, 255))
 
-	q = clique.findMaximumCliqueNaive(a)
+	q, op = clique.findMaximumCliqueNaive(a)
+	print(op)
 	g.addGraph(q, (0, 0, 255), (0, 255, 255))
 
 	g.run()
