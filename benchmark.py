@@ -1,12 +1,19 @@
 import generator
 import math
 import time
+import graph
+import pprint
 
 class BenchmarkResult:
-	def __init__(self, result, iterations, time):
-		self.result = result
+	def __init__(self, vertices, edges, result, iterations, time):
+		self.vertices = vertices
+		self.edges = edges
 		self.iterations = iterations
 		self.time = time
+		self.result = result
+
+	def __repr__(self):
+		return pprint.pformat(vars(self), indent=4, width=1)
 
 class Benchmark:
 	def __init__(self):
@@ -26,9 +33,12 @@ class Benchmark:
 	# Run a benchmark for the algorithm.
 	#
 	# Measures the time required to run the algorithm, the algorithm should return the result and the number of base operations performed.
-	def run(self, graph, algorithmFunc):
+	def run(self, algorithmFunc):
 		# Results obtained from the benchmark
 		results = []
+
+		# Average results for group of tests
+		averages = []
 
 		connectivity = self.connectivity_from
 		vertices = self.vertices_from
@@ -38,11 +48,11 @@ class Benchmark:
 			while connectivity < self.connectivity_to:
 				# Calculate the number of edges for % connectivity
 				edges = math.ceil(graph.Graph.maximumEdges(vertices) * connectivity)
-				graph = generator.generate(0, vertices, edges)
+				g = generator.GraphGenerator.generate(0, vertices, edges)
 
 				# Run the algorithm
 				start = time.perf_counter()
-				result, iterations = algorithmFunc(graph)
+				result, iterations = algorithmFunc(g)
 				end = time.perf_counter()
 
 				# Store results
