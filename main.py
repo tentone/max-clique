@@ -7,8 +7,11 @@ def main():
 
 	# Graph
 	a = generator.generate(63944, 10, 40)
-	print(a.serialize())
+	print(a.toJSON())
+	print(a.adjacencyMatrix())
+
 	g.addGraph(a, (255, 0, 0), (255, 255, 0))
+
 
 	# All cliques
 	#q = clique.findAllCliquesNaive(a)

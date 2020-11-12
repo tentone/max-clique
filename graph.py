@@ -2,6 +2,8 @@ import json
 import uuid
 
 # Stores a vertex in a position of the graph.
+#
+# Vertices have (x, y) integer position associated.
 class Vertex:
 	def __init__(self, x, y):
 		assert x > 0 and x <= 20 and y > 0 and y <= 20
@@ -74,6 +76,18 @@ class Graph:
 			if x >= v.x - radius and x <= v.x + radius and y >= v.y - radius and y <= v.y + radius:
 				return True
 		return False
+
+	# Generate a adjacency matrix for the graph.
+	#
+	# May be useful for some analysis scenarios
+	def adjacencyMatrix(self):
+		matrix = []
+
+		for a in range(0, len(self.vertices)):
+			for b in range(0, len(self.vertices)):
+				matrix.append(0 if (self.vertices[a] == self.vertices[b] or not self.edgeExists(self.vertices[a], self.vertices[b])) else 1)
+
+		return matrix
 
 	# Serialize the graph into a JSON file
 	#
