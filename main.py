@@ -8,19 +8,16 @@ def main():
 	b = Benchmark()
 
 	# Benchmark Naive Down
-	results = b.run(clique.Clique.findMaxNaiveDown)
-	Benchmark.writeCSV(results, 'naive_down.csv')
+	# results = b.run(clique.Clique.findMaxNaiveDown)
+	# Benchmark.writeCSV(results, 'naive_down.csv')
 
 	# Benchmark Naive Up
 	# results = b.run(clique.Clique.findMaxNaiveUp)
-	# Benchmark.writeCSV(results, 'up.csv')
+	# Benchmark.writeCSV(results, 'naive_up.csv')
 
 	# Benchmark expand
-	# results = b.run(clique.Clique.findMaxNaiveUp)
-	# Benchmark.writeCSV(results, 'up.csv')
-
-
-	return
+	# results = b.run(clique.Clique.findMaxExpansion)
+	# Benchmark.writeCSV(results, 'expansion.csv')
 
 	# Graph
 	g = gui.GUI()

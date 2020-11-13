@@ -35,12 +35,7 @@ class Clique:
 					cliqueFound = True
 
 					# Create the subgraph and store
-					clique = graph.Graph()
-					clique.vertices = c
-					for i in range(0, len(c) - 1):
-						for j in range(i + 1, len(c)):
-							clique.addEdge(graph.Edge(c[i], c[j]))
-					cliques.append(clique)
+					cliques.append(Clique.buildClique(c))
 
 			# Increase size
 			size += 1
@@ -81,12 +76,7 @@ class Clique:
 
 				# First clique found can be directly considered as the biggest
 				if isClique:
-					clique = graph.Graph()
-					clique.vertices = c
-					for i in range(0, len(c) - 1):
-						for j in range(i + 1, len(c)):
-							clique.addEdge(graph.Edge(c[i], c[j]))
-					return clique, comparisons
+					return Clique.buildClique(c), comparisons
 
 			# Decrease size
 			size -= 1
@@ -126,14 +116,8 @@ class Clique:
 
 				# Store clique
 				if isClique:
-					clique = graph.Graph()
-					clique.vertices = c
-					for i in range(0, len(c) - 1):
-						for j in range(i + 1, len(c)):
-							clique.addEdge(graph.Edge(c[i], c[j]))
-
 					# Store and move to next size
-					maxClique = clique
+					maxClique = Clique.buildClique(c)
 					break
 
 			# Decrease size
@@ -149,4 +133,4 @@ class Clique:
 		for i in range(0, len(vertices) - 1):
 			for j in range(i + 1, len(vertices)):
 				cq.addEdge(graph.Edge(vertices[i], vertices[j]))
-		return
+		return cq
