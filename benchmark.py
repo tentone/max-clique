@@ -48,45 +48,18 @@ class Benchmark:
 		self.connectivity_to = 0.9
 		self.connectivity_steps = 0.1
 
-	# Test variations in algorithm
-	def variation(self, algorithmFunc):
-		# List of results from all tests performed
-		results = []
-
-		# Fixed configuration to test
-		vertices = 10
-		connectivity = 0.5
-
-		# Test the algorithm multiple times
-		for t in range(0, self.tests):
-			edges = math.ceil(graph.Graph.maximumEdges(vertices) * connectivity)
-			g = generator.GraphGenerator.generate(t, vertices, edges)
-
-			start = time.perf_counter()
-			_, iterations = algorithmFunc(g)
-			end = time.perf_counter()
-
-			results.append(BenchmarkResult(vertices, edges, connectivity, iterations, end - start))
-
-
-		# Get min and max times and iterations
-		min = results[0]
-		max = results[0]
-
-		for r in results:
-			if min.iterations > r.iterations:
-				min = r
-			if max.iterations < r.iterations:
-				max = r
-
-		return min, max
-
 	# Run a benchmark for the algorithm.
 	#
 	# Measures the time required to run the algorithm, the algorithm should return the result and the number of base operations performed.
 	def run(self, algorithmFunc):
 		# Average results for group of tests
-		results = []
+		average = []
+
+		# Min results for group of tests
+		minimum = []
+
+		# Max results for group of tests
+		maximum = []
 
 		connectivity = self.connectivity_from
 		vertices = self.vertices_from
@@ -94,7 +67,11 @@ class Benchmark:
 		while vertices <= self.vertices_to:
 			connectivity = self.connectivity_from
 			while connectivity <= self.connectivity_to:
-				res = BenchmarkResult(0, 0, 0, 0, 0)
+				# Average value
+				avg = BenchmarkResult(0, 0, 0, 0, 0)
+
+				# List of results from all tests performed
+				results = []
 
 				for t in range(0, self.tests):
 					# Calculate the number of edges for % connectivity
@@ -107,10 +84,17 @@ class Benchmark:
 					end = time.perf_counter()
 
 					# Update average
-					res.add(vertices, edges, connectivity, iterations, end - start)
+					results.append(BenchmarkResult(vertices, edges, connectivity, iterations, end - start))
+					avg.add(vertices, edges, connectivity, iterations, end - start)
 
-				res.average(self.tests)
-				results.append(res)
+				# Calculate and store average
+				avg.average(self.tests)
+				average.append(avg)
+
+				# Calculate minimum and maximum
+				min, max = self.extractMinMax(results)
+				minimum.append(min)
+				maximum.append(max)
 
 				# Increase connectivity
 				connectivity += self.connectivity_steps
@@ -118,7 +102,44 @@ class Benchmark:
 			# Icrease number of vertices
 			vertices += self.vertices_steps
 
-		return results
+		return average, minimum, maximum
+
+	# Test variations in algorithm
+	#
+	# Run the algorithm with a fixed configuration multiple time to check for variations between min and max cases
+	@staticmethod
+	def variation(self, algorithmFunc, vertices = 10, connectivity = 0.5, tests = 10):
+		# List of results from all tests performed
+		results = []
+
+		# Test the algorithm multiple times
+		for t in range(0, tests):
+			edges = math.ceil(graph.Graph.maximumEdges(vertices) * connectivity)
+			g = generator.GraphGenerator.generate(t, vertices, edges)
+
+			start = time.perf_counter()
+			_, iterations = algorithmFunc(g)
+			end = time.perf_counter()
+
+			results.append(BenchmarkResult(vertices, edges, connectivity, iterations, end - start))
+
+		return self.extractMinMax(results)
+
+	# Get minimum and maximum times and iterations from list of results
+	#
+	# Receives a list of results as parameter.
+	@staticmethod
+	def extractMinMax(results):
+		min = results[0]
+		max = results[0]
+
+		for r in results:
+			if min.iterations > r.iterations:
+				min = r
+			if max.iterations < r.iterations:
+				max = r
+
+		return min, max
 
 	# Write the results to a CSV file for easier analysis
 	@staticmethod
