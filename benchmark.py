@@ -48,6 +48,39 @@ class Benchmark:
 		self.connectivity_to = 0.9
 		self.connectivity_steps = 0.1
 
+	# Test variations in algorithm
+	def variation(self, algorithmFunc):
+		# List of results from all tests performed
+		results = []
+
+		# Fixed configuration to test
+		vertices = 10
+		connectivity = 0.5
+
+		# Test the algorithm multiple times
+		for t in range(0, self.tests):
+			edges = math.ceil(graph.Graph.maximumEdges(vertices) * connectivity)
+			g = generator.GraphGenerator.generate(t, vertices, edges)
+
+			start = time.perf_counter()
+			_, iterations = algorithmFunc(g)
+			end = time.perf_counter()
+
+			results.append(BenchmarkResult(vertices, edges, connectivity, iterations, end - start))
+
+
+		# Get min and max times and iterations
+		min = results[0]
+		max = results[0]
+
+		for r in results:
+			if min.iterations > r.iterations:
+				min = r
+			if max.iterations < r.iterations:
+				max = r
+
+		return min, max
+
 	# Run a benchmark for the algorithm.
 	#
 	# Measures the time required to run the algorithm, the algorithm should return the result and the number of base operations performed.
