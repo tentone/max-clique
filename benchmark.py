@@ -36,11 +36,11 @@ class BenchmarkResult:
 class Benchmark:
 	def __init__(self):
 		# How many test to do for each graph configuration
-		self.tests = 5
+		self.tests = 6
 
 		# Graph size
-		self.vertices_from = 4
-		self.vertices_to = 20
+		self.vertices_from = 3
+		self.vertices_to = 22
 		self.vertices_steps = 1
 
 		# Connectivity

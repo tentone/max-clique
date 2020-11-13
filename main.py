@@ -9,16 +9,22 @@ def main():
 	b = Benchmark()
 
 	# Benchmark Naive Down
-	# results = b.run(Clique.findMaxNaiveDown)
-	# Benchmark.writeCSV(results, 'naive_down.csv')
-
-	min, max = Benchmark.variation(Clique.findMaxNaiveDown)
-	pprint.pprint(min)
-	pprint.pprint(max)
+	results, min, max = b.run(Clique.findMaxNaiveDown)
+	Benchmark.writeCSV(results, 'naive_down_avg.csv')
+	Benchmark.writeCSV(min, 'naive_down_min.csv')
+	Benchmark.writeCSV(max, 'naive_down_max.csv')
 
 	# Benchmark Naive Up
-	# results = b.run(Clique.findMaxNaiveUp)
-	# Benchmark.writeCSV(results, 'naive_up.csv')
+	results, min, max = b.run(Clique.findMaxNaiveUp)
+	Benchmark.writeCSV(results, 'naive_up_avg.csv')
+	Benchmark.writeCSV(min, 'naive_up_min.csv')
+	Benchmark.writeCSV(max, 'naive_up_max.csv')
+
+	# min, max = Benchmark.variation(Clique.findMaxNaiveDown)
+	# pprint.pprint(min)
+	# pprint.pprint(max)
+
+
 
 	# Benchmark expand
 	# results = b.run(Clique.findMaxExpansion)
