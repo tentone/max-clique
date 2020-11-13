@@ -126,6 +126,49 @@ class Clique:
 		return maxClique, comparisons
 
 
+	# Find the maximum clique by seraching for smaller ones first and then expanding the smaller ones found.
+	#
+	# Starts with 2 by 2 cliques and expands them from there.
+	@staticmethod
+	def findMaxFromExpansion(g):
+		size = 2
+		comparisons = 0
+
+		maxClique = None
+
+		while size <= len(g.vertices):
+			# All possible combinations of vertices
+			combs = list(itertools.combinations(g.vertices, size))
+
+			# Iterate all combinations
+			for c in combs:
+				isClique = True
+
+				# Check if the vertices are all connected
+				for i in range(0, len(c) - 1):
+					for j in range(i + 1, len(c)):
+						comparisons += 1
+						# If a edge is not connected then it is not a clique
+						if not g.edgeExists(c[i], c[j]):
+							isClique = False
+							break
+
+					# Break if is not a clique
+					if not isClique:
+						break
+
+				# Store clique
+				if isClique:
+					# Store and move to next size
+					maxClique = Clique.buildClique(c)
+					break
+
+			# Decrease size
+			size += 1
+
+		return maxClique, comparisons
+
+
 	# Build clique using a list of vertices.
 	def buildClique(vertices):
 		cq = graph.Graph()
