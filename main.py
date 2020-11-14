@@ -1,9 +1,9 @@
 import time
+import pprint
 from benchmark import Benchmark
-import gui
+from gui import GUI
 from generator import GraphGenerator
 from clique import Clique
-import pprint
 
 def main():
 	b = Benchmark()
@@ -25,7 +25,7 @@ def main():
 	# Benchmark.writeCSV(results, 'expansion.csv')
 
 	# Graph
-	# g = gui.GUI()
+	# g = GUI()
 	# a = GraphGenerator.generate(63944, 10, 40)
 	# print(a.toJSON())
 	# print(a.adjacencyMatrix())
