@@ -5,34 +5,9 @@ import graph
 import pprint
 import csv
 
-# Class to store a benchmark result
+# Class that stores a testing configuration
 #
-# Stores the metrics extracted from the run, these metric can be stored as an average value.
-class BenchmarkResult:
-	def __init__(self, vertices, edges, connectivity, iterations, time):
-		self.vertices = vertices
-		self.edges = edges
-		self.connectivity = connectivity
-		self.iterations = iterations
-		self.time = time
-
-	def add(self, vertices, edges, connectivity, iterations, time):
-		self.vertices += vertices
-		self.edges += edges
-		self.connectivity += connectivity
-		self.iterations += iterations
-		self.time += time
-
-	def average(self, tests):
-		self.vertices /= tests
-		self.edges /= tests
-		self.connectivity /= tests
-		self.iterations /= tests
-		self.time /= tests
-
-	def __repr__(self):
-		return pprint.pformat(vars(self), indent=4, width=1)
-
+# Object can be used to run tests in a algorithm.
 class Benchmark:
 	def __init__(self):
 		# How many test to do for each graph configuration
@@ -40,7 +15,7 @@ class Benchmark:
 
 		# Graph size
 		self.vertices_from = 3
-		self.vertices_to = 22
+		self.vertices_to = 10
 		self.vertices_steps = 1
 
 		# Connectivity
@@ -129,3 +104,32 @@ class Benchmark:
 			writer.writeheader()
 			for r in results:
 				writer.writerow({'vertices': r.vertices, 'edges': r.edges, 'connectivity': r.connectivity, 'iterations': r.iterations, 'time': r.time})
+
+
+# Class to store a benchmark result
+#
+# Stores the metrics extracted from the run, these metric can be stored as an average value.
+class BenchmarkResult:
+	def __init__(self, vertices, edges, connectivity, iterations, time):
+		self.vertices = vertices
+		self.edges = edges
+		self.connectivity = connectivity
+		self.iterations = iterations
+		self.time = time
+
+	def add(self, vertices, edges, connectivity, iterations, time):
+		self.vertices += vertices
+		self.edges += edges
+		self.connectivity += connectivity
+		self.iterations += iterations
+		self.time += time
+
+	def average(self, tests):
+		self.vertices /= tests
+		self.edges /= tests
+		self.connectivity /= tests
+		self.iterations /= tests
+		self.time /= tests
+
+	def __repr__(self):
+		return pprint.pformat(vars(self), indent=4, width=1)

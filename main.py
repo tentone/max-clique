@@ -9,38 +9,36 @@ def main():
 	b = Benchmark()
 
 	# Benchmark Naive Down
-	# results, min, max = b.run(Clique.findMaxNaiveDown)
+	# results, min, max = b.run(Clique.findMaxBruteForceDown)
 	# Benchmark.writeCSV(results, 'naive_down_avg.csv')
 	# Benchmark.writeCSV(min, 'naive_down_min.csv')
 	# Benchmark.writeCSV(max, 'naive_down_max.csv')
 
 	# Benchmark Naive Up
-	# results, min, max = b.run(Clique.findMaxNaiveUp)
+	# results, min, max = b.run(Clique.findMaxBruteForceUp)
 	# Benchmark.writeCSV(results, 'naive_up_avg.csv')
 	# Benchmark.writeCSV(min, 'naive_up_min.csv')
 	# Benchmark.writeCSV(max, 'naive_up_max.csv')
 
 	# Benchmark expand
-	# results = b.run(Clique.findMaxExpansion)
-	# Benchmark.writeCSV(results, 'expansion.csv')
+	results, min, max = b.run(Clique.findMaxGreedy)
+	Benchmark.writeCSV(results, 'greedy_avg.csv')
+	Benchmark.writeCSV(min, 'greedy_min.csv')
+	Benchmark.writeCSV(max, 'greedy_max.csv')
 
 	# Graph
-	# g = GUI()
-	# a = GraphGenerator.generate(63944, 10, 40)
-	# print(a.toJSON())
-	# print(a.adjacencyMatrix())
+	g = GUI()
+	a = GraphGenerator.generate(63944, 10, 40)
 
-	# g.addGraph(a, (255, 0, 0), (255, 255, 0))
+	g.addGraph(a, (255, 0, 0), (255, 255, 0))
 
-	# All cliques
-	#q = Clique.findAllNaive(a)
-	#if len(q) > 0:
-	# 	g.addGraph(q[-1], (0, 0, 255), (0, 255, 255))
-
-	# q, _ = Clique.findMaxNaiveUp(a)
+	# q, _ = Clique.findMaxBruteForceDown(a)
 	# g.addGraph(q, (0, 0, 255), (0, 255, 255))
 
-	# g.run()
+	q, _ = Clique.findMaxGreedy(a)
+	g.addGraph(q, (0, 0, 255), (0, 255, 255))
+
+	g.run()
 
 if __name__ == "__main__":
 	main()

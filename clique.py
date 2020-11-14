@@ -1,12 +1,13 @@
 import itertools
 from graph import Graph, Edge
 
+# Static class with method to process cliques in a graph.
 class Clique:
 	# Searches for all cliques inside of the graph.
 	#
 	# Uses a naive approach testing all combinations of vertexes and checking if each group has connections to each others.
 	@staticmethod
-	def findAllNaive(g):
+	def findAllBruteForce(g):
 		# List of cliques found in the graph
 		cliques = []
 
@@ -49,9 +50,9 @@ class Clique:
 	#
 	# Starts by testing the higher possible, size of the clique
 	@staticmethod
-	def findMaxNaiveDown(g):
+	def findMaxBruteForceDown(g):
 		size = len(g.vertices)
-		comparisons = 0
+		operations = 0
 
 		while size > 1:
 			# All possible combinations of vertices
@@ -64,7 +65,7 @@ class Clique:
 				# Check if the vertices are all connected
 				for i in range(0, len(c) - 1):
 					for j in range(i + 1, len(c)):
-						comparisons += 1
+						operations += 1
 						# If a edge is not connected then it is not a clique
 						if not g.edgeExists(c[i], c[j]):
 							isClique = False
@@ -76,20 +77,20 @@ class Clique:
 
 				# First clique found can be directly considered as the biggest
 				if isClique:
-					return Clique.buildClique(c), comparisons
+					return Clique.buildClique(c), operations
 
 			# Decrease size
 			size -= 1
 
-		return None, comparisons
+		return None, operations
 
 	# Find the maximum clique using a naive approach testing all combinations of vertexes.
 	#
 	# Starts by testing the lower possible, size of the clique
 	@staticmethod
-	def findMaxNaiveUp(g):
+	def findMaxBruteForceUp(g):
 		size = 2
-		comparisons = 0
+		operations = 0
 
 		maxClique = None
 
@@ -104,7 +105,7 @@ class Clique:
 				# Check if the vertices are all connected
 				for i in range(0, len(c) - 1):
 					for j in range(i + 1, len(c)):
-						comparisons += 1
+						operations += 1
 						# If a edge is not connected then it is not a clique
 						if not g.edgeExists(c[i], c[j]):
 							isClique = False
@@ -123,21 +124,67 @@ class Clique:
 			# Decrease size
 			size += 1
 
-		return maxClique, comparisons
-
+		return maxClique, operations
 
 	# Find the maximum clique by seraching for smaller ones first and then expanding the smaller ones found.
 	#
 	# Starts with 2 by 2 cliques and expands them from there.
 	@staticmethod
-	def findMaxFromExpansion(g):
+	def findMaxGreedy(g):
 		# Use the list of adjacencies as a starting point
-		cliques = g.edges.copy()
+		cliques = []
+		for e in g.edges:
+			verticeClique = e.v.copy()
+			verticesToTest = []
+			for v in g.vertices:
+				if not v in verticeClique:
+					verticesToTest.append(v)
+			cliques.append()
 
-		#
+		operations = 0
+
+		size = 2
+
+		while size < len(g.vertices) and  len(cliques) > 1:
+			# Check if the cliques can be expanded further
+			for clique in cliques:
+				# Stop the clique is the last one is the maximum already
+				if len(cliques) == 1:
+					break
+
+				# If the clique can be expanded
+				wasExpanded = False
+
+				# Iterate trought all other vertices that are not in the clique
+				for newVert in g.vertices:
+					if not newVert in clique:
+						# Check if it has connectivity to the already exisiting vertices in the set
+						canBeAdded = True
+						for vert in clique:
+							operations += 1
+							if not g.edgeExists(newVert, vert):
+								canBeAdded = False
+								break
+
+						if canBeAdded:
+							clique.append(newVert)
+							wasExpanded = True
+							break
+
+				# Discard any cliques that could not be expanded further
+				if not wasExpanded:
+					cliques.remove(clique)
+
+			size += 1
+
+		if len(cliques) > 0:
+			return Clique.buildClique(cliques[0]), operations
+
+		return None, operations
 
 
 	# Build clique using a list of vertices.
+	@staticmethod
 	def buildClique(vertices):
 		cq = Graph()
 		cq.vertices = vertices
@@ -145,3 +192,8 @@ class Clique:
 			for j in range(i + 1, len(vertices)):
 				cq.addEdge(Edge(vertices[i], vertices[j]))
 		return cq
+
+class CliqueGreedy:
+	def __init__(self, vertices, toTest):
+		self.vertices = vertices
+		self.toTest = toTest
