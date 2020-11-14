@@ -131,29 +131,28 @@ class Clique:
 	# Starts with 2 by 2 cliques and expands them from there.
 	@staticmethod
 	def findMaxGreedy(g):
-		operations = 0
-		size = 2
-
 		# Use the list of adjacencies as a starting point
 		cliques = []
 		for e in g.edges:
 			base = e.v.copy()
 			toTest = []
 			for v in g.vertices:
-				operations += 1
 				if not v in base:
 					toTest.append(v)
 			cliques.append(CliqueGreedy(base, toTest))
 
-		while size < len(g.vertices) and len(cliques) > 1:
+		operations = 0
+		size = 2
+
+		while len(cliques) > 1 and size < len(g.vertices):
 			# Check if the cliques can be expanded further
 			for clique in cliques:
-				# Stop the clique is the last one is the maximum already
+				# Stop if the clique is the last one it is the maximum already
 				if len(cliques) == 1:
 					break
 
 				# If the clique can be expanded
-				wasExpanded = False
+				cliqueWasExpanded = False
 
 				# Iterate trought all other vertices that are not in the clique
 				for newVert in clique.toTest:
@@ -171,11 +170,11 @@ class Clique:
 					# Add to the list of vertice
 					if hasFullConnect:
 						clique.vertices.append(newVert)
-						wasExpanded = True
+						cliqueWasExpanded = True
 						break
 
 				# Discard any cliques that could not be expanded further
-				if not wasExpanded:
+				if not cliqueWasExpanded:
 					cliques.remove(clique)
 
 			size += 1
