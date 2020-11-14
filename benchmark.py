@@ -15,7 +15,7 @@ class Benchmark:
 
 		# Graph size
 		self.vertices_from = 3
-		self.vertices_to = 10
+		self.vertices_to = 22
 		self.vertices_steps = 1
 
 		# Connectivity

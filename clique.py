@@ -131,21 +131,21 @@ class Clique:
 	# Starts with 2 by 2 cliques and expands them from there.
 	@staticmethod
 	def findMaxGreedy(g):
+		operations = 0
+		size = 2
+
 		# Use the list of adjacencies as a starting point
 		cliques = []
 		for e in g.edges:
-			verticeClique = e.v.copy()
-			verticesToTest = []
+			base = e.v.copy()
+			toTest = []
 			for v in g.vertices:
-				if not v in verticeClique:
-					verticesToTest.append(v)
-			cliques.append()
+				operations += 1
+				if not v in base:
+					toTest.append(v)
+			cliques.append(CliqueGreedy(base, toTest))
 
-		operations = 0
-
-		size = 2
-
-		while size < len(g.vertices) and  len(cliques) > 1:
+		while size < len(g.vertices) and len(cliques) > 1:
 			# Check if the cliques can be expanded further
 			for clique in cliques:
 				# Stop the clique is the last one is the maximum already
@@ -156,20 +156,23 @@ class Clique:
 				wasExpanded = False
 
 				# Iterate trought all other vertices that are not in the clique
-				for newVert in g.vertices:
-					if not newVert in clique:
-						# Check if it has connectivity to the already exisiting vertices in the set
-						canBeAdded = True
-						for vert in clique:
-							operations += 1
-							if not g.edgeExists(newVert, vert):
-								canBeAdded = False
-								break
+				for newVert in clique.toTest:
+					# Remove from list of vertice to be tested
+					clique.toTest.remove(newVert)
 
-						if canBeAdded:
-							clique.append(newVert)
-							wasExpanded = True
+					# Check if it has connectivity to the already exisiting vertices in the set
+					hasFullConnect = True
+					for vert in clique.vertices:
+						operations += 1
+						if not g.edgeExists(newVert, vert):
+							hasFullConnect = False
 							break
+
+					# Add to the list of vertice
+					if hasFullConnect:
+						clique.vertices.append(newVert)
+						wasExpanded = True
+						break
 
 				# Discard any cliques that could not be expanded further
 				if not wasExpanded:
@@ -178,7 +181,7 @@ class Clique:
 			size += 1
 
 		if len(cliques) > 0:
-			return Clique.buildClique(cliques[0]), operations
+			return Clique.buildClique(cliques[0].vertices), operations
 
 		return None, operations
 
