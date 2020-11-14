@@ -1,5 +1,5 @@
 import random
-import graph
+from graph import Graph, Edge, Vertex
 
 class GraphGenerator:
 	# Generate a new graph with the provided configuration.
@@ -9,13 +9,13 @@ class GraphGenerator:
 	def generate(seed, vertices, edges):
 		random.seed(seed)
 
-		g = graph.Graph()
+		g = Graph()
 
 		# Vertices
 		for i in range(vertices):
 			success = False
 			while not success:
-				v = graph.Vertex(random.randint(1, 20), random.randint(1, 20))
+				v = Vertex(random.randint(1, 20), random.randint(1, 20))
 
 				if not g.isOccupiedRadius(v.x, v.y, 1):
 					g.addVertex(v)
@@ -34,7 +34,7 @@ class GraphGenerator:
 					b = g.vertices[random.randint(0, max)]
 
 				if not g.edgeExists(a, b):
-					e = graph.Edge(a, b)
+					e = Edge(a, b)
 					g.addEdge(e)
 					success = True
 

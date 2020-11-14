@@ -104,27 +104,6 @@ class Benchmark:
 
 		return average, minimum, maximum
 
-	# Test variations in algorithm
-	#
-	# Run the algorithm with a fixed configuration multiple time to check for variations between min and max cases
-	@staticmethod
-	def variation(self, algorithmFunc, vertices = 10, connectivity = 0.5, tests = 10):
-		# List of results from all tests performed
-		results = []
-
-		# Test the algorithm multiple times
-		for t in range(0, tests):
-			edges = math.ceil(graph.Graph.maximumEdges(vertices) * connectivity)
-			g = generator.GraphGenerator.generate(t, vertices, edges)
-
-			start = time.perf_counter()
-			_, iterations = algorithmFunc(g)
-			end = time.perf_counter()
-
-			results.append(BenchmarkResult(vertices, edges, connectivity, iterations, end - start))
-
-		return self.extractMinMax(results)
-
 	# Get minimum and maximum times and iterations from list of results
 	#
 	# Receives a list of results as parameter.
