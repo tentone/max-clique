@@ -11,7 +11,7 @@ from graph import Graph
 class Benchmark:
 	def __init__(self):
 		# How many test to do for each graph configuration
-		self.tests = 6
+		self.tests = 10
 
 		# Graph size
 		self.vertices_from = 3
