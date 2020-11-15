@@ -10,7 +10,7 @@ from graph import Graph
 def main():
 	# Graph
 	g = GUI()
-	a = GraphGenerator.generate(63944, 10, 40)
+	a = GraphGenerator.generate(0, 10, 40)
 
 	g.addGraph(a, (255, 0, 0), (255, 255, 0))
 
