@@ -1,4 +1,4 @@
-# Graph Clique
+# Graph Maximum Clique
 
 - This repository contains a library for calculating cliques in a undirected graph as well as utils for graph generation and visualization.
 - In an undirected graph, a clique is a complete sub-graph of the given graph, where all the vertices are connected to all the other vertices of this sub-graph. The maximum clique problem is the computational problem of finding maximum clique of the graph
