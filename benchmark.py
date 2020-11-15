@@ -1,9 +1,9 @@
-import generator
 import math
 import time
-import graph
 import pprint
 import csv
+from generator import GraphGenerator
+from graph import Graph
 
 # Class that stores a testing configuration
 #
@@ -50,8 +50,8 @@ class Benchmark:
 
 				for t in range(0, self.tests):
 					# Calculate the number of edges for % connectivity
-					edges = math.ceil(graph.Graph.maximumEdges(vertices) * connectivity)
-					g = generator.GraphGenerator.generate(t, vertices, edges)
+					edges = math.ceil(Graph.maximumEdges(vertices) * connectivity)
+					g = GraphGenerator.generate(t, vertices, edges)
 
 					# Run the algorithm
 					start = time.perf_counter()
