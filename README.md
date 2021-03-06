@@ -22,11 +22,11 @@ The first solution was implemented using a brute-force approach, the existence o
 
 We start by testing all the combinations of vertices from C(v, 2) up to C(v, v) iterating trough all clique sizes available in the graph. After finding the first clique of the size being tested, we move to the next size it is not necessary to iterate all cliques for each size.
 
-<img src="https://raw.githubusercontent.com/tentone/clique/master/readme/up.jpg" width="500">
+<img src="https://raw.githubusercontent.com/tentone/clique/master/readme/up.png" width="500">
 
 Since we only need to find the maximum clique it can be more efficient to start directly from the biggest hypothesis, the first clique found can be directly assumed as the biggest available in the graph without need to iterate through all the smaller combinations.
 
-<img src="https://raw.githubusercontent.com/tentone/clique/master/readme/down.jpg" width="500">
+<img src="https://raw.githubusercontent.com/tentone/clique/master/readme/down.png" width="500">
 
 
 
@@ -40,7 +40,7 @@ When no more vertices with full connectivity are found we can assume that the se
 
 To further speed up this approach we can for each initial set store a list of all the other vertices that need to be tested to prevent repeating vertices edge existence test
 
-<img src="https://raw.githubusercontent.com/tentone/clique/master/readme/greedy.jpg" width="500">
+<img src="https://raw.githubusercontent.com/tentone/clique/master/readme/greedy.png" width="500">
 
 
 
